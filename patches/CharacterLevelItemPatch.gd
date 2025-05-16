@@ -22,6 +22,7 @@ static func patch():
 		code_lines.remove(code_index + 2)
 		code_lines.remove(code_index + 1)
 		code_lines.remove(code_index)
+		code_lines.insert(code_index, get_code("func_use_in_world"))
 
 	# # #
 
@@ -39,16 +40,19 @@ static func get_code(block: String) -> String:
 	
 	code_blocks["func_custom_use_menu"] = """
 func custom_use_menu(_node, _context_kind: int, _context, arg = null):
+	if not arg:
+		return null
+
 	assert (arg is Character)
 	if not (arg is Character):
 		return null
 
-	var amount = yield(MenuHelper.use_item_stack(self, 1, SaveState.max_level - arg.level), "completed")
-	if not amount:
-		return null
-	else:
-		consume_on_use = false # Override
-	return MenuHelper.level_up_amount(arg, amount)
+	var max_value = min(SaveState.max_level - arg.level, self.value)
+	return { "character": arg, "amount": Bind.new(MenuHelper, "consume_item_stack", [self, max_value]) }
 """
 
+	code_blocks["func_use_in_world"] = """
+func _use_in_world(_node, _context, arg):
+	return MenuHelper.level_up_amount(arg["character"], yield(arg["amount"].call_func(), "completed"))
+"""
 	return code_blocks[block]

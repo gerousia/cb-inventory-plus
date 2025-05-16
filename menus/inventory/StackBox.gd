@@ -13,12 +13,21 @@ onready var icon_texture = find_node("IconTexture")
 var item: BaseItem setget set_item
 
 func _ready():
+	set_item(item)
+	set_min_value(min_value)
+	set_max_value(max_value)
 	refresh()
 
 func set_value(x: int):
 	value = int(clamp(x, min_value, max_value))
 	value = (value / step) * step
 	refresh()
+	
+func set_min_value(value: int):
+	min_value = min(value, SaveState.inventory.get_item_amount(item))
+	
+func set_max_value(value: int):
+	max_value = min(value, SaveState.inventory.get_item_amount(item))
 
 func set_item(value: BaseItem):
 	item = value
