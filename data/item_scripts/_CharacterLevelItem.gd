@@ -20,20 +20,22 @@
 #
 # # # NEW # # #
 #func custom_use_menu(_node, _context_kind: int, _context, arg = null):
+#	if not arg:
+#		return null
+#
 #	assert (arg is Character)
 #	if not (arg is Character):
 #		return null
 #
-#	var amount = yield(MenuHelper.use_item_stack(self, 1, SaveState.max_level - arg.level), "completed")
-#	if not amount:
-#		return null
-#	else:
-#		consume_on_use = false # Override
-#	return MenuHelper.level_up_amount(arg, amount)
+#	var max_value = min(SaveState.max_level - arg.level, self.value)
+#	return { "character": arg, "amount": Bind.new(MenuHelper, "consume_item_stack", [self, max_value]) }
 # # # # # #
 #
-## # # REMOVED # # #
-#func _use_in_world(_node, _context, character):
-#	yield(MenuHelper.level_up(character), "completed")
-#	return true
+## # # REPLACED # # #
+##func _use_in_world(_node, _context, character):
+##	yield(MenuHelper.level_up(character), "completed")
+##	return true
 ## # # # # #
+#
+#func _use_in_world(_node, _context, arg):
+#	return MenuHelper.level_up_amount(arg["character"], yield(arg["amount"].call_func(), "completed"))

@@ -40,6 +40,9 @@ static func get_code(block: String) -> String:
 	
 	code_blocks["func_level_up_amount"] = """
 func level_up_amount(character_or_tape: Resource, amount: int):
+	if not character_or_tape or not amount:
+		return
+
 	var exp_yield: int = 0
 	if character_or_tape is Character:
 		exp_yield = character_or_tape.get_exp_to_reach_level(amount)
@@ -54,17 +57,19 @@ func level_up_amount(character_or_tape: Resource, amount: int):
 """
 
 	code_blocks["func_use_item_stack"] = """
-func use_item_stack(item: BaseItem, min_value: int = 1, max_value: int = 100, show_msg: bool = false) -> int:
+func consume_item_stack(item: BaseItem, max_value: int = 100, min_value: int = 1) -> int:
 	var menu = load("res://mods/cb_inventory_use_stack/menus/inventory/StackBox.tscn").instance()
+	menu.item = item
 	menu.min_value = min_value
 	menu.max_value = max_value
-	menu.item = item
 	add_child(menu)
 	var result = yield(menu.run_menu(), "completed")
 	menu.queue_free()
-	if result == null:
+	if result == null or not consume_item(item, result, false):
 		return false
-	return result if consume_item(item, result, show_msg) else false
+	else:
+		item.consume_on_use = false # Override
+	return result
 """
 
 	return code_blocks[block]

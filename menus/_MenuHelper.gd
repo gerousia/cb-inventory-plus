@@ -612,17 +612,19 @@
 #	WorldSystem.pop_flags()
 #
 ## # # NEW # # #
-#func use_item_stack(item: BaseItem, min_value: int = 1, max_value: int = 100, show_msg: bool = false) -> int:
+#func consume_item_stack(item: BaseItem, max_value: int = 100, min_value: int = 1) -> int:
 #	var menu = load("res://mods/cb_inventory_use_stack/menus/inventory/StackBox.tscn").instance()
+#	menu.item = item
 #	menu.min_value = min_value
 #	menu.max_value = max_value
-#	menu.item = item
 #	add_child(menu)
 #	var result = yield(menu.run_menu(), "completed")
 #	menu.queue_free()
-#	if result == null:
+#	if result == null or not consume_item(item, result, false):
 #		return false
-#	return result if consume_item(item, result, show_msg) else false
+#	else:
+#		item.consume_on_use = false # Override
+#	return result
 ## # # # # #
 #
 #func consume_item(item: BaseItem, amount: int = 1, show_msg: bool = true) -> bool:
