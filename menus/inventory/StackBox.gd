@@ -24,10 +24,10 @@ func set_value(x: int):
 	refresh()
 	
 func set_min_value(value: int):
-	min_value = min(value, SaveState.inventory.get_item_amount(item))
+	min_value = int(min(value, SaveState.inventory.get_item_amount(item)))
 	
 func set_max_value(value: int):
-	max_value = min(value, SaveState.inventory.get_item_amount(item))
+	max_value = int(min(value, SaveState.inventory.get_item_amount(item)))
 
 func set_item(value: BaseItem):
 	item = value
@@ -85,3 +85,8 @@ func _on_DownButton_pressed():
 
 func _on_AcceptButton_pressed():
 	choose_option(value)
+	
+func choose_option(value):
+	if value != null or cancelable:
+		item.consume_on_use = false
+		emit_signal("option_chosen", value)
