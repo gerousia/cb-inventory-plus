@@ -175,9 +175,9 @@
 #	return false
 #
 ## # # NEW # # #
-#func get_exp_to_reach_level(target_level: int) -> int:
+#func get_exp_to_reach_level(amount: int) -> int:
 #	var exp_points = 0
-#	target_level = min(level + target_level, MAX_MAX_LEVEL)
+#	var target_level = int(min(MAX_MAX_LEVEL, level + amount))
 #	for _level in range(level, target_level):
 #		exp_points += BattleFormulas.get_exp_to_next_level(_level, exp_gradient, exp_base_level)
 #	return exp_points
