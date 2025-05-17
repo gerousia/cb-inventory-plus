@@ -31,7 +31,7 @@ If you're developing new items that function as stackable consumables, this mod 
 &nbsp;
 
 ### 🧾 Metadata
-- **Mod ID:** `mod_inventory_use_stack`  
+- **Mod ID:** `mod_inventory_plus`
 - **Save File Tags:** `none` (safe to remove)  
 - **Netplay Tags:** `none`
 
