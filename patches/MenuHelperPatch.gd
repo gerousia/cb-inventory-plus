@@ -40,12 +40,11 @@ static func get_code(block: String) -> String:
 	
 	code_blocks["func_level_up_amount"] = """
 func level_up_amount(character_or_tape: Resource, amount: int):
-	if not character_or_tape or not amount:
-		return
-
 	var exp_yield: int = 0
 	if character_or_tape is Character:
 		exp_yield = character_or_tape.get_exp_to_reach_level(amount)
+	elif character_or_tape is MonsterTape:
+		exp_yield = character_or_tape.get_exp_to_reach_grade(amount)
 	
 	var menu = scenes.GainExpMenu.instance()
 	menu.whitelist = [character_or_tape]
