@@ -18,10 +18,10 @@ static func patch():
 	
 	code_index = code_lines.find("""func _use_in_world(_node, _context, character):""")
 	if code_index >= 0:
-		code_lines.insert(code_index - 1, get_code("func_custom_use_menu"))
 		code_lines.remove(code_index + 2)
 		code_lines.remove(code_index + 1)
 		code_lines.remove(code_index)
+		code_lines.insert(code_index - 1, get_code("func_custom_use_menu"))
 		code_lines.insert(code_index, get_code("func_use_in_world"))
 
 	# # #
@@ -45,14 +45,20 @@ func custom_use_menu(_node, _context_kind: int, _context, arg = null):
 
 	assert (arg is Character)
 	if not (arg is Character):
-		return null
-
-	var max_value = min(SaveState.max_level - arg.level, self.value)
-	return { "character": arg, "amount": Bind.new(MenuHelper, "consume_item_stack", [self, max_value]) }
+		return false
+		
+	var max_value = min(SaveState.max_level - arg.level, value)
+	var amount = yield(MenuHelper.show_stack_box(self, max_value), "completed")
+	if not amount:
+		return false
+	
+	return { "character": arg, "amount": amount, }
 """
 
 	code_blocks["func_use_in_world"] = """
 func _use_in_world(_node, _context, arg):
-	return MenuHelper.level_up_amount(arg["character"], yield(arg["amount"].call_func(), "completed"))
+	assert (SaveState.inventory.has_item(self, arg["amount"]))
+	yield(MenuHelper.level_up_amount(arg["character"], arg["amount"]), "completed")
+	return MenuHelper.consume_item(self, arg["amount"], false)
 """
 	return code_blocks[block]

@@ -22,7 +22,7 @@ static func patch():
 	
 	code_index = code_lines.find("""func consume_item(item: BaseItem, amount: int = 1, show_msg: bool = true) -> bool:""")
 	if code_index >= 0:
-		code_lines.insert(code_index - 1, get_code("func_use_item_stack"))
+		code_lines.insert(code_index - 1, get_code("func_show_stack_box"))
 
 	# # #
 
@@ -56,8 +56,8 @@ func level_up_amount(character_or_tape: Resource, amount: int):
 	menu.queue_free()
 """
 
-	code_blocks["func_use_item_stack"] = """
-func consume_item_stack(item: BaseItem, max_value: int = 100, min_value: int = 1) -> int:
+	code_blocks["func_show_stack_box"] = """
+func show_stack_box(item: BaseItem, max_value: int = 100, min_value: int = 1) -> int:
 	var menu = load("res://mods/cb_inventory_use_stack/menus/inventory/StackBox.tscn").instance()
 	menu.item = item
 	menu.min_value = min_value
@@ -65,10 +65,6 @@ func consume_item_stack(item: BaseItem, max_value: int = 100, min_value: int = 1
 	add_child(menu)
 	var result = yield(menu.run_menu(), "completed")
 	menu.queue_free()
-	if result == null or not consume_item(item, result, false):
-		return false
-	else:
-		item.consume_on_use = false # Override
 	return result
 """
 
