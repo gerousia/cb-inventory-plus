@@ -24,10 +24,10 @@ func set_value(x: int):
 	refresh()
 	
 func set_min_value(value: int):
-	min_value = min(value, SaveState.inventory.get_item_amount(item))
+	min_value = int(min(value, SaveState.inventory.get_item_amount(item))) # RETARDED SHIT. EVERYTHING IS INT BUT THIS "MIN" FUCKER IS RETURNING A FLOAT
 	
 func set_max_value(value: int):
-	max_value = min(value, SaveState.inventory.get_item_amount(item))
+	max_value = int(min(value, SaveState.inventory.get_item_amount(item)))
 
 func set_item(value: BaseItem):
 	item = value
