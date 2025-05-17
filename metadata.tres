@@ -1,11 +1,11 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://mods/cb_inventory_use_stack/Mod.gd" type="Script" id=1]
+[ext_resource path="res://mods/cb_inventory_plus/Mod.gd" type="Script" id=1]
 
 [resource]
 script = ExtResource( 1 )
-id = "mod_inventory_use_stack"
-name = "Inventory UseStack"
+id = "mod_inventory_plus"
+name = "Inventory Plus"
 version_code = 1
 version_string = "1.0"
 author = "Gerousia"
@@ -13,6 +13,6 @@ save_file_format_tag = ""
 save_file_format_tag_version = 0
 network_protocol_tag = ""
 disable_network_multiplayer = false
-modified_files = [ "res://menus/MenuHelper.gd", "res://data/Character.gd", "res://data/item_scripts/CharacterLevelItem.gd" ]
+modified_files = [ "res://menus/MenuHelper.gd", "res://data/item_scripts/CharacterLevelItem.gd" ]
 modified_dirs = [  ]
 translations = [  ]
