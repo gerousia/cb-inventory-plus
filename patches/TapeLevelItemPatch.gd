@@ -1,21 +1,13 @@
-static func patch():
-	var script_path = "res://data/item_scripts/TapeLevelItem.gd"
-	var patched_script: GDScript = preload("res://data/item_scripts/TapeLevelItem.gd")
+static func path() -> String:
+	return "res://data/item_scripts/TapeLevelItem.gd"
 
-	if !patched_script.has_source_code():
-		var file: File = File.new()
-		var err = file.open(script_path, File.READ)
-		if err != OK:
-			push_error("Check that %s is included in Modified Files"% script_path)
-			return
-		patched_script.source_code = file.get_as_text()
-		file.close()
-
-	var code_lines: Array = patched_script.source_code.split("\n")
+static func process(code: String) -> String:
+	var output: String = ""
+	var code_lines: Array = code.split("\n")
 	var code_index: int = 0
-	
+
 	# # #
-	
+
 	code_index = code_lines.find("""func custom_use_menu(_node, _context_kind: int, _context, arg = null):""")
 	if code_index >= 0:
 		code_lines.remove(code_index + 5)
@@ -24,7 +16,7 @@ static func patch():
 		code_lines.remove(code_index + 2)
 		code_lines.remove(code_index + 1)
 		code_lines.remove(code_index)
-		code_lines.insert(code_index, get_code("func_custom_use_menu"))
+		code_lines.insert(code_index, _get_replacement_line("func_custom_use_menu"))
 		
 	code_index = code_lines.find("""func _use_in_world(_node, _context, arg):""")
 	if code_index >= 0:
@@ -34,20 +26,16 @@ static func patch():
 		code_lines.remove(code_index + 2)
 		code_lines.remove(code_index + 1)
 		code_lines.remove(code_index)
-		code_lines.insert(code_index, get_code("func_use_in_world"))
+		code_lines.insert(code_index, _get_replacement_line("func_use_in_world"))
 
 	# # #
 
-	patched_script.source_code = ""
 	for line in code_lines:
-		patched_script.source_code += line + "\n"
+		output += line + "\n"
 
-	var err = patched_script.reload(true)
-	if err != OK:
-		push_error("Failed to patch %s." % script_path)
-		return
+	return output
 
-static func get_code(block: String) -> String:
+static func _get_replacement_line(block: String) -> String:
 	var code_blocks: Dictionary = {}
 	
 	code_blocks["func_custom_use_menu"] = """
@@ -56,14 +44,13 @@ func custom_use_menu(_node, _context_kind: int, _context, arg = null):
 		return arg
 
 	var tape = yield(MenuHelper.show_choose_tape_menu(SaveState.party.get_tapes(), Bind.new(self, "_tape_filter")), "completed")
-	assert (tape is MonsterTape)
-	if not (tape is MonsterTape):
-		return false
+	if not tape or not tape is MonsterTape:
+		return null
 
 	var max_value = min(MonsterTape.MAX_TAPE_GRADE - tape.grade, value)
 	var amount = yield(MenuHelper.show_stack_box(self, max_value), "completed")
 	if amount == null or amount <= 0:
-		return false
+		return null
 
 	return { "tape": tape, "amount": amount }
 """
