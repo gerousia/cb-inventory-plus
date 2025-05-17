@@ -85,3 +85,8 @@ func _on_DownButton_pressed():
 
 func _on_AcceptButton_pressed():
 	choose_option(value)
+	
+func choose_option(value):
+	if value != null or cancelable:
+		item.consume_on_use = false
+		emit_signal("option_chosen", value)
