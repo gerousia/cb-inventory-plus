@@ -1,8 +1,8 @@
 extends ContentInfo
 
 const PATCHES = [
-	preload("res://mods/cb_inventory_use_stack/patches/MenuHelperPatch.gd"),
-	preload("res://mods/cb_inventory_use_stack/patches/CharacterLevelItemPatch.gd"),
+	preload("res://mods/cb_inventory_plus/patches/MenuHelperPatch.gd"),
+	preload("res://mods/cb_inventory_plus/patches/CharacterLevelItemPatch.gd"),
 ]
 
 func _init(): # modified cat_modutils

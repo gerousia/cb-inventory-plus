@@ -31,8 +31,8 @@ static func _get_replacement_line(block: String) -> String:
 	var code_blocks: Dictionary = {}
 
 	code_blocks["helpers"] = """
-const CharacterHelper = preload("res://mods/cb_inventory_use_stack/helpers/CharacterHelper.gd")
-const MonsterTapeHelper = preload("res://mods/cb_inventory_use_stack/helpers/MonsterTapeHelper.gd")
+const CharacterHelper = preload("res://mods/cb_inventory_plus/helpers/CharacterHelper.gd")
+const MonsterTapeHelper = preload("res://mods/cb_inventory_plus/helpers/MonsterTapeHelper.gd")
 """
 	
 	code_blocks["func_level_up_amount"] = """
@@ -56,7 +56,7 @@ func level_up_amount(character_or_tape: Resource, amount: int):
 
 	code_blocks["func_show_stack_box"] = """
 func show_stack_box(item: BaseItem, max_value: int = 100, min_value: int = 1) -> int:
-	var menu = load("res://mods/cb_inventory_use_stack/menus/inventory/StackBox.tscn").instance()
+	var menu = load("res://mods/cb_inventory_plus/menus/inventory/StackBox.tscn").instance()
 	menu.item = item
 	menu.min_value = min_value
 	menu.max_value = max_value
