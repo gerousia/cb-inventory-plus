@@ -7,19 +7,26 @@ const PATCHES = [
 
 func _init(): # modified cat_modutils
 	for patch in PATCHES:
-		var script: GDScript = fetch(patch.path())
+		var script: GDScript = fetch(patch)
 		var code: String = patch.process(read(script))
 		write(script, code)
 
+func fetch(patch: GDScript) -> GDScript:
+	print("Loading [%s]: \"%s\"" % [PATCHES.find(patch) + 1, patch.resource_path])
+	
+	if ResourceLoader.has_cached(patch.script_path):
+		return ResourceLoader.load(patch.script_path, "GDScript") as GDScript
+	
 func fetch(path: String) -> GDScript:
 	if not ResourceLoader.has_cached(path):
 		push_error("Expected cached resource not found: %s" % path)
+
+	push_error("Expected cached resource not found: %s" % patch.resource_path)
 		return null
-	return ResourceLoader.load(path, "GDScript") as GDScript
 
 func read(script: GDScript) -> String:
-	var err: int
 	var source_code: String = ""
+	var err: int
 
 	if script.has_source_code():
 		source_code = script.source_code
@@ -35,6 +42,7 @@ func read(script: GDScript) -> String:
 		source_code = file.get_as_text()
 		file.close()
 
+	print("	Replacing: \"%s\"" % script.resource_path)
 	return source_code
 
 func write(script: GDScript, code: String) -> void:
@@ -43,3 +51,4 @@ func write(script: GDScript, code: String) -> void:
 	if not err == OK:
 		push_error("Failed to patch file: %s" % script.resource_path)
 		return
+	print("	Patch Successful.")

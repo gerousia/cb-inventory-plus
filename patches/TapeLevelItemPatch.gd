@@ -1,5 +1,4 @@
-static func path() -> String:
-	return "res://data/item_scripts/TapeLevelItem.gd"
+const script_path = "res://data/item_scripts/TapeLevelItem.gd"
 
 static func process(code: String) -> String:
 	var output: String = ""
