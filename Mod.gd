@@ -3,6 +3,8 @@ extends ContentInfo
 const PATCHES = [
 	preload("res://mods/cb_inventory_plus/patches/MenuHelperPatch.gd"),
 	preload("res://mods/cb_inventory_plus/patches/CharacterLevelItemPatch.gd"),
+	preload("res://mods/cb_inventory_plus/patches/TapeLevelItemPatch.gd"),
+	preload("res://mods/cb_inventory_plus/patches/GainExpMenuPatch.gd"),
 ]
 
 func _init(): # modified cat_modutils
@@ -21,12 +23,12 @@ func fetch(patch: GDScript) -> GDScript:
 		return patch.cached_script
 
 	push_error("Expected cached resource not found: %s" % patch.resource_path)
-		return null
+	return null
 
 func read(script: GDScript) -> String:
 	var source_code: String = ""
 	var err: int
-
+	
 	if script.has_source_code():
 		source_code = script.source_code
 	else:
