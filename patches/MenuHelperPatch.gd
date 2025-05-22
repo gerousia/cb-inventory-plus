@@ -1,5 +1,4 @@
-static func path() -> String:
-	return "res://menus/MenuHelper.gd"
+const script_path = "res://menus/MenuHelper.gd"
 
 static func process(code: String) -> String:
 	var output: String = ""
@@ -49,6 +48,7 @@ func level_up_amount(character_or_tape: Resource, amount: int):
 	menu.whitelist = [character_or_tape]
 	menu.exp_yield = exp_yield
 	menu.loot_table = null
+	menu.bypass_upgrade = character_or_tape is MonsterTape
 	add_child(menu)
 	yield(menu.run_menu(), "completed")
 	menu.queue_free()
