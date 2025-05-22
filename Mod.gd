@@ -17,9 +17,8 @@ func fetch(patch: GDScript) -> GDScript:
 	if ResourceLoader.has_cached(patch.script_path):
 		return ResourceLoader.load(patch.script_path, "GDScript") as GDScript
 	
-func fetch(path: String) -> GDScript:
-	if not ResourceLoader.has_cached(path):
-		push_error("Expected cached resource not found: %s" % path)
+	if patch.cached_script:
+		return patch.cached_script
 
 	push_error("Expected cached resource not found: %s" % patch.resource_path)
 		return null
