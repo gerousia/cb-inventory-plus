@@ -1,43 +1,78 @@
-# 🎒 Cassette Beasts – Inventory Plus Mod
+<p align="center">
+  <img src="https://www.cassettebeasts.com/wp-content/uploads/2021/10/CassetteBeasts_Logo.png" alt="Cassette Beasts Official Logo" width="330" height="200">
+</p>
 
-&nbsp;
+<h3 align="center">Cassette Beasts – Inventory Plus Mod</h3>
 
-## 💡 Bulk Item Use
+<p align="center">
+  <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3483351047" target="_blank">
+    <img src="https://steamcommunity.com/favicon.ico" width="16" style="vertical-align:middle;"> <span>Steam Workshop</span>
+  </a> 
+  • 
+  <a href="https://modworkshop.net/mod/52047" target="_blank">
+    <img src="https://modworkshop.net/favicon.ico" width="16" style="vertical-align:middle;"> <span>ModWorkshop</span>
+  </a>
+</p>
 
-Enables **bulk use of items**, replacing the default single-action behavior — ideal for mods introducing **stackable consumables**.
+<p align="center">
+  Utility mod that replaces single-use item behavior with <strong>bulk-use</strong> logic—ideal for <em>stackable consumables</em>.
+</p>
 
-If you're developing new items that function as stackable consumables, this mod helps streamline implementation and reduce repetitive code.
+---
 
-&nbsp;
+## Features
 
-### ✅ What's Included
-- Framework for handling bulk use in the inventory  
-- Reusable helper functions to support stack item behavior
+- **Bulk-use system**  
+  Replaces single-use actions with a flexible bulk-use mechanic.
 
-&nbsp;
+- **Helper functions**  
+  Includes utility methods to simplify integration.
 
-### 🛠️ Implementation(s)
-- `Olive Up!`  
-- `Upgrape`
+- **Minimal boilerplate**  
+  Clean, modular design speeds up implementation.
 
-&nbsp;
+- **Non-intrusive**  
+  Does not modify core gameplay or existing save data.
 
-### 🧾 Metadata
+## Metadata
+
 - **Mod ID:** `mod_inventory_plus`
-- **Save File Tags:** `none` (safe to remove)  
+- **Save File Tags:** `none`
 - **Netplay Tags:** `none`
 
-&nbsp;
+## Implementation
 
-### 🔐 Verification
-```
-Version: 1.0
-SHA-256: AFEC8CA1AB7404B7792115F4E7F5494A399E3146C723062684E2AAFA2F11A3A6
-MD5: 8F6D9E8E80E4C210D57C6E6A986B80F7
+### Prompting the Player for Stack Quantity
+   
+Integrate the `MenuHelper.show_stack_box` method within the item's `custom_use_menu`. This will present a stack selection dialog and return the player's chosen quantity `amount`.
+
+```python
+func custom_use_menu(_node, _context_kind: int, _context, arg = null):
+    
+    ...
+
+    # Call the stack selection scene with defined min and max values
+    var amount: int = yield(MenuHelper.show_stack_box(self, max_value, min_value), "completed")
+
+    # Return arguments including the selected amount for consume
+    return { "arg": arg, "amount": amount }
 ```
 
-``` 
-Version: 1.1
-SHA-256: C81012848EF46C2B4E967E12D769D9090BBBE12271D219E1CF85F644ED610103
-MD5: 9CF60CC7DD067E1E85523806763B77D2
+### Consuming Items Based on Player Selection
+
+Once the quantity is selected, consume the specified number of items by calling `MenuHelper.consume_item` in either the `_use_in_world` or `_use_in_battle` function. The selected `amount` is passed as an argument.
+
+```python
+func _use_in_world(_node, _context, arg):
+
+    ...
+
+    # Consume the specified amount of the item (`false` indicates a viewable MessageDialog)
+    return MenuHelper.consume_item(self, arg["amount"], false)
 ```
+
+## Examples
+
+- [`Olive Up!`](https://www.youtube.com/watch?v=JBI7GNNjtnw)
+- [`Upgrape`](https://www.youtube.com/watch?v=YV2lx3icAe8)
+
