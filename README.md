@@ -60,7 +60,7 @@ func custom_use_menu(_node, _context_kind: int, _context, arg = null):
 
 ### Consuming Items Based on Player Selection
 
-Once the quantity is selected, consume the specified number of items by calling `MenuHelper.consume_item` in either the `_use_in_world` or `_use_in_battle` function. The selected `amount` is passed as an argument.
+Once the quantity is selected, consume the specified number of items by calling `MenuHelper.consume_item` in either the `_use_in_world` or `_use_in_battle`. The selected `amount` is passed as an argument.
 
 ```python
 func _use_in_world(_node, _context, arg):
