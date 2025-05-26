@@ -1,4 +1,5 @@
 const script_path = "res://data/item_scripts/TapeLevelItem.gd"
+const cached_script = preload("res://data/item_scripts/TapeLevelItem.gd")
 
 static func process(code: String) -> String:
 	var output: String = ""
@@ -27,7 +28,7 @@ static func process(code: String) -> String:
 		code_lines.remove(code_index)
 		code_lines.insert(code_index, _get_replacement_line("func_use_in_world"))
 
-	# # #
+	# # #	
 
 	for line in code_lines:
 		output += line + "\n"
