@@ -40,7 +40,7 @@ func custom_use_menu(_node, _context_kind: int, _context, arg = null):
 	if not amount:
 		return null
 	
-	return { "character": arg, "amount": amount, }
+	return { "character": arg, "amount": amount }
 """
 
 	code_blocks["func_use_in_world"] = """
