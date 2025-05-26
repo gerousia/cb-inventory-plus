@@ -34,11 +34,11 @@
 - **Non-intrusive**  
   Does not modify core gameplay or existing save data.
 
-## Metadata
+## Examples
 
-- **Mod ID:** `mod_inventory_plus`
-- **Save File Tags:** `none`
-- **Netplay Tags:** `none`
+- [`Olive Up!`](https://youtu.be/JBI7GNNjtnw)
+- [`Upgrape`](https://youtu.be/YV2lx3icAe8)
+- [`Reodorant`](https://youtu.be/AGULnHuuURw)
 
 ## Implementation
 
@@ -73,9 +73,8 @@ func _use_in_world(_node, _context, arg):
     return MenuHelper.consume_item(self, arg["amount"], false)
 ```
 
-## Examples
+## Metadata
 
-- [`Olive Up!`](https://youtu.be/JBI7GNNjtnw)
-- [`Upgrape`](https://youtu.be/YV2lx3icAe8)
-- [`Reodorant`](https://youtu.be/AGULnHuuURw)
-
+- **Mod ID:** `mod_inventory_plus`
+- **Save File Tags:** `none`
+- **Netplay Tags:** `none`
