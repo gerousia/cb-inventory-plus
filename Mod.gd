@@ -16,7 +16,7 @@ func _init(): # modified cat_modutils
 func fetch(patch: GDScript) -> GDScript:
 	print("Loading [%s]: \"%s\"" % [PATCHES.find(patch) + 1, patch.resource_path])
 	
-	if ResourceLoader.has_cached(patch.script_path):
+	if ResourceLoader.has_cached(patch.script_path): # For Global Resources
 		return ResourceLoader.load(patch.script_path, "GDScript") as GDScript
 	
 	if patch.cached_script:
