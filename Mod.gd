@@ -2,9 +2,10 @@ extends ContentInfo
 
 const PATCHES = [
 	preload("res://mods/cb_inventory_plus/patches/MenuHelperPatch.gd"),
+	preload("res://mods/cb_inventory_plus/patches/GainExpMenuPatch.gd"),
 	preload("res://mods/cb_inventory_plus/patches/CharacterLevelItemPatch.gd"),
 	preload("res://mods/cb_inventory_plus/patches/TapeLevelItemPatch.gd"),
-	preload("res://mods/cb_inventory_plus/patches/GainExpMenuPatch.gd"),
+	preload("res://mods/cb_inventory_plus/patches/ReodorantItemPatch.gd"),
 ]
 
 func _init(): # modified cat_modutils
@@ -16,7 +17,7 @@ func _init(): # modified cat_modutils
 func fetch(patch: GDScript) -> GDScript:
 	print("Loading [%s]: \"%s\"" % [PATCHES.find(patch) + 1, patch.resource_path])
 	
-	if ResourceLoader.has_cached(patch.script_path):
+	if ResourceLoader.has_cached(patch.script_path): # For Global Resources
 		return ResourceLoader.load(patch.script_path, "GDScript") as GDScript
 	
 	if patch.cached_script:

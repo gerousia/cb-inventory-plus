@@ -1,4 +1,5 @@
 const script_path = "res://data/item_scripts/CharacterLevelItem.gd"
+const cached_path = preload("res://data/item_scripts/CharacterLevelItem.gd")
 
 static func process(code: String) -> String:
 	var output: String = ""
@@ -9,10 +10,10 @@ static func process(code: String) -> String:
 
 	code_index = code_lines.find("""func _use_in_world(_node, _context, character):""")
 	if code_index >= 0:
-		code_lines.insert(code_index - 1, _get_replacement_line("func_custom_use_menu"))
-		code_lines.remove(code_index + 2)
-		code_lines.remove(code_index + 1)
-		code_lines.remove(code_index)
+		var block_size = 3
+		for index in range(block_size - 1, -1, -1):
+			code_lines.remove(code_index + index)
+		code_lines.insert(code_index, _get_replacement_line("func_custom_use_menu"))
 		code_lines.insert(code_index, _get_replacement_line("func_use_in_world"))
 
 	# # #
@@ -39,7 +40,7 @@ func custom_use_menu(_node, _context_kind: int, _context, arg = null):
 	if not amount:
 		return null
 	
-	return { "character": arg, "amount": amount, }
+	return { "character": arg, "amount": amount }
 """
 
 	code_blocks["func_use_in_world"] = """

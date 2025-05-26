@@ -5,14 +5,14 @@
 [resource]
 script = ExtResource( 1 )
 id = "mod_inventory_plus"
-name = "Inventory Plus"
-version_code = 2
-version_string = "1.1"
+name = "Inventory+"
+version_code = 3
+version_string = "1.2"
 author = "Gerousia"
 save_file_format_tag = ""
 save_file_format_tag_version = 0
 network_protocol_tag = ""
 disable_network_multiplayer = false
-modified_files = [ "res://menus/MenuHelper.gd", "res://data/item_scripts/CharacterLevelItem.gd", "res://data/item_scripts/TapeLevelItem.gd", "res://menus/gain_exp/GainExpMenu.gd" ]
+modified_files = [ "res://menus/MenuHelper.gd", "res://menus/gain_exp/GainExpMenu.gd", "res://data/item_scripts/CharacterLevelItem.gd", "res://data/item_scripts/TapeLevelItem.gd", "res://data/item_scripts/ReodorantItem.gd" ]
 modified_dirs = [  ]
 translations = [  ]
