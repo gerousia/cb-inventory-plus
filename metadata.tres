@@ -6,8 +6,8 @@
 script = ExtResource( 1 )
 id = "mod_inventory_plus"
 name = "Inventory+"
-version_code = 2
-version_string = "1.1"
+version_code = 3
+version_string = "1.2"
 author = "Gerousia"
 save_file_format_tag = ""
 save_file_format_tag_version = 0
