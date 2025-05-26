@@ -51,10 +51,11 @@ func custom_use_menu(_node, _context_kind: int, _context, arg = null):
     
     ...
 
-    # Call the stack selection scene with defined min and max values
+    # The selection range is defined by min_value (default: 1) and max_value (default: item_amount).
+    # The selected amount will be returned once the player confirms their choice.
     var amount: int = yield(MenuHelper.show_stack_box(self, max_value, min_value), "completed")
 
-    # Return arguments including the selected amount for consume
+    # Return any provided arguments, including the amount selected for consumption.
     return { "arg": arg, "amount": amount }
 ```
 
@@ -67,12 +68,14 @@ func _use_in_world(_node, _context, arg):
 
     ...
 
-    # Consume the specified amount of the item (`false` indicates a viewable MessageDialog)
+    # Consumes the specified amount of the item.
+    # A boolean flag controls whether a MessageDialog is displayed during the process.
     return MenuHelper.consume_item(self, arg["amount"], false)
 ```
 
 ## Examples
 
-- [`Olive Up!`](https://www.youtube.com/watch?v=JBI7GNNjtnw)
-- [`Upgrape`](https://www.youtube.com/watch?v=YV2lx3icAe8)
+- [`Olive Up!`](https://youtu.be/JBI7GNNjtnw)
+- [`Upgrape`](https://youtu.be/YV2lx3icAe8)
+- [`Reodorant`](https://youtu.be/AGULnHuuURw)
 
