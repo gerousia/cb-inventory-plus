@@ -10,22 +10,16 @@ static func process(code: String) -> String:
 
 	code_index = code_lines.find("""func custom_use_menu(_node, _context_kind: int, _context, arg = null):""")
 	if code_index >= 0:
-		code_lines.remove(code_index + 5)
-		code_lines.remove(code_index + 4)
-		code_lines.remove(code_index + 3)
-		code_lines.remove(code_index + 2)
-		code_lines.remove(code_index + 1)
-		code_lines.remove(code_index)
+		var block_size = 7
+		for index in range(block_size - 1, -1, -1):
+			code_lines.remove(code_index + index)
 		code_lines.insert(code_index, _get_replacement_line("func_custom_use_menu"))
 		
 	code_index = code_lines.find("""func _use_in_world(_node, _context, arg):""")
 	if code_index >= 0:
-		code_lines.remove(code_index + 5)
-		code_lines.remove(code_index + 4)
-		code_lines.remove(code_index + 3)
-		code_lines.remove(code_index + 2)
-		code_lines.remove(code_index + 1)
-		code_lines.remove(code_index)
+		var block_size = 7
+		for index in range(block_size - 1, -1, -1):
+			code_lines.remove(code_index + index)
 		code_lines.insert(code_index, _get_replacement_line("func_use_in_world"))
 
 	# # #	
